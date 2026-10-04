@@ -27,3 +27,6 @@ test = [
 dev = [
     "ruff (>=0.16.10,<0.17.0)"
 ]
+
+[tool.poetry.requires-plugins]
+poetry-plugin-export = ">=1.8"

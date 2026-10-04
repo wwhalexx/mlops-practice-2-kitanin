@@ -1,0 +1,9 @@
+.venv/
+**/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+temperature_24h.csv
+temperature_24h.png
+.DS_Store

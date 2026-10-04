@@ -12,30 +12,37 @@ def create_dataframe(hours, temps):
     return df.sort_values("time").reset_index(drop=True)
 
 
-url = "https://api.open-meteo.com/v1/forecast"
-params = {
-    "latitude": 55.75,
-    "longitude": 37.61,
-    "hourly": "temperature_2m"
-}
+def main():
+    url = "https://api.open-meteo.com/v1/forecast"
 
-response = requests.get(url, params=params, timeout=10)
-response.raise_for_status()
-data = response.json()
+    params = {
+        "latitude": 55.75,
+        "longitude": 37.61,
+        "hourly": "temperature_2m"
+    }
 
-hours = data["hourly"]["time"][:24]
-temps = data["hourly"]["temperature_2m"][:24]
+    response = requests.get(url, params=params, timeout=10)
+    response.raise_for_status()
+    data = response.json()
 
-df = create_dataframe(hours, temps)
+    hours = data["hourly"]["time"][:24]
+    temps = data["hourly"]["temperature_2m"][:24]
 
-df.to_csv("temperature_24h.csv", index=False)
-print("Сохранено в temperature_24h.csv")
+    df = create_dataframe(hours, temps)
 
-plt.plot(df["time"], df["temperature_c"], marker="o")
-plt.xticks(rotation=45)
-plt.title("Температура в Москве (24 часа)")
-plt.xlabel("Время")
-plt.ylabel("°C")
-plt.tight_layout()
-plt.savefig("temperature_24h.png")
-plt.show()
+    df.to_csv("temperature_24h.csv", index=False)
+    print("Сохранено в temperature_24h.csv")
+
+    plt.plot(df["time"], df["temperature_c"], marker="o")
+    plt.xticks(rotation=45)
+    plt.title("Температура в Москве (24 часа)")
+    plt.xlabel("Время")
+    plt.ylabel("°C")
+    plt.tight_layout()
+
+    plt.savefig("temperature_24h.png")
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()
